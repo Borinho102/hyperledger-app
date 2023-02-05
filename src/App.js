@@ -41,6 +41,13 @@ import {
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react'
+import {
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+} from '@chakra-ui/react'
 import { Select } from '@chakra-ui/react'
 
 function App() {
@@ -151,7 +158,7 @@ function App() {
   const [score, setScore] = useState(0)
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
-  const [loation, setLocation] = useState("")
+  const [location, setLocation] = useState("")
 
   const year = new Date().getFullYear()
   const [message, setMessage] = useState(null)
@@ -161,7 +168,7 @@ function App() {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
-    switch(name) {
+    switch (name) {
       case 'name': setName(value); break;
       case 'role': setRole(value); break;
       case 'score': setRole(value); break;
@@ -170,6 +177,76 @@ function App() {
       case 'location': setLocation(value); break;
       default: break;
     }
+  }
+
+  const updateStudent = (data) => {
+    setID(data.id)
+    setName(data.name)
+    setEmail(data.email)
+    setPhone(data.phone)
+    setLocation(data.location)
+    setScore(data.score)
+    onAdd2Open()
+  }
+
+  const addStudent = () => {
+    setID(null)
+    setName("")
+    setEmail("")
+    setPhone("")
+    setLocation("")
+    setScore("")
+    onAdd2Open()
+  }
+
+  const createStudent = () => {
+    studentData.push({
+      id: students.length + 1,
+      name: name,
+      email: email,
+      phone: phone,
+      location: location,
+      score: score,
+    })
+    console.log(studentData)
+    setID(null)
+    setName("")
+    setEmail("")
+    setPhone("")
+    setLocation("")
+    setRole("")
+    setScore("")
+    onAdd2Close()
+    setMessage({
+      type: 'success',
+      title: 'Add!',
+      desc: 'Record added successfully',
+    })
+  }
+
+  const createTeacher = () => {
+    teacherData.push({
+      id: teachers.length + 1,
+      name: name,
+      email: email,
+      phone: phone,
+      location: location,
+      role: role,
+    })
+    console.log(studentData)
+    setID(null)
+    setName("")
+    setEmail("")
+    setPhone("")
+    setLocation("")
+    setRole("")
+    setScore("")
+    onAddClose()
+    setMessage({
+      type: 'success',
+      title: 'Add!',
+      desc: 'Record added successfully',
+    })
   }
 
   return (
@@ -203,7 +280,7 @@ function App() {
                   style={{ width: "24px", height: "24px" }}>
                 </lord-icon>
                 &nbsp;&nbsp;
-                <span className="tab">User Registration</span>
+                <span className="tab" style={{paddingTop:"5px"}}>User Registration</span>
               </Tab>
               <Tab>
                 <lord-icon
@@ -214,7 +291,7 @@ function App() {
                   style={{ width: "24px", height: "24px" }}>
                 </lord-icon>
                 &nbsp;&nbsp;
-                <span className="tab">Get Authorization</span>
+                <span className="tab" style={{paddingTop:"5px"}}>Get Authorization</span>
               </Tab>
               <Tab>
                 <lord-icon
@@ -225,7 +302,7 @@ function App() {
                   style={{ width: "24px", height: "24px" }}>
                 </lord-icon>
                 &nbsp;&nbsp;
-                <span className="tab">Teachers Records</span>
+                <span className="tab" style={{paddingTop:"5px"}}>Teachers Records</span>
               </Tab>
               <Tab>
                 <lord-icon
@@ -236,7 +313,7 @@ function App() {
                   style={{ width: "24px", height: "24px" }}>
                 </lord-icon>
                 &nbsp;&nbsp;
-                <span className="tab">Students Records</span>
+                <span className="tab" style={{paddingTop:"5px"}}>Students Records</span>
               </Tab>
             </TabList>
 
@@ -275,7 +352,7 @@ function App() {
                               <InputLeftElement
                                 pointerEvents='none'
                                 children={
-                                  <ion-icon name="mail-outline"></ion-icon>
+                                  <ion-icon name="person-outline"></ion-icon>
                                 }
                               />
                               <Input type='text' placeholder='Enter full name' />
@@ -670,33 +747,38 @@ function App() {
                           <Th className='text-white text-center'>Contact</Th>
                           <Th className='text-white text-center'>
 
-                            <Button onClick={onAdd2Open} className='w-75' leftIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue' size='sm' variant='solid'>
+                            <Button onClick={addStudent} className='w-75' leftIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue' size='sm' variant='solid'>
                               Add record
                             </Button>
                             <Modal size={'3xl'} closeOnOverlayClick={false} isOpen={isAdd2Open} onClose={onAdd2Close} isCentered>
                               <ModalOverlay />
                               <ModalContent>
-                                <ModalHeader>Add New Student</ModalHeader>
+                                <ModalHeader>{id === null ? "Add" : "Update"} New Student</ModalHeader>
                                 <ModalCloseButton />
                                 <ModalBody>
 
-                                  <Alert
-                                    status='info'
-                                    variant='subtle'
-                                    flexDirection='column'
-                                    alignItems='center'
-                                    justifyContent='center'
-                                    textAlign='center'
-                                    height='150px'
-                                    className='mb-3'>
-                                    <AlertIcon boxSize='40px' mr={0} />
-                                    <AlertTitle mt={4} mb={1} fontSize='lg'>
-                                      Create Teacher Record
-                                    </AlertTitle>
-                                    <AlertDescription maxWidth='sm'>
-                                      Enter your valid information to save a new record
-                                    </AlertDescription>
-                                  </Alert>
+                                  {
+                                    id === null ?
+                                      <>
+                                        <Alert
+                                          status='info'
+                                          variant='subtle'
+                                          flexDirection='column'
+                                          alignItems='center'
+                                          justifyContent='center'
+                                          textAlign='center'
+                                          height='150px'
+                                          className='mb-3'>
+                                          <AlertIcon boxSize='40px' mr={0} />
+                                          <AlertTitle mt={4} mb={1} fontSize='lg'>
+                                            Create Student Record
+                                          </AlertTitle>
+                                          <AlertDescription maxWidth='sm'>
+                                            Enter your valid information to save a new record
+                                          </AlertDescription>
+                                        </Alert>
+                                      </> : <></>
+                                  }
 
                                   <div className='row'>
                                     <div className='col-md-6'>
@@ -707,15 +789,17 @@ function App() {
                                             <ion-icon name="person-outline"></ion-icon>
                                           }
                                         />
-                                        <Input type='text' placeholder='Full Name' />
+                                        <Input type='text' value={name} name="name" onChange={handleChange} placeholder='Full Name' />
                                       </InputGroup>
                                     </div>
                                     <div className='col-md-6'>
-                                      <Select size='lg' placeholder='Select Role'>
-                                        <option value='teacher'>Teacher</option>
-                                        <option value='principal'>Supervisor</option>
-                                        <option value='other'>Other</option>
-                                      </Select>
+                                      <NumberInput defaultValue={score} precision={2} step={0.1}>
+                                        <NumberInputField placeholder='Average Score' value={score} onChange={(e) => setScore(e.target.value)} name="score" />
+                                        <NumberInputStepper>
+                                          <NumberIncrementStepper />
+                                          <NumberDecrementStepper />
+                                        </NumberInputStepper>
+                                      </NumberInput>
                                     </div>
                                   </div>
 
@@ -728,7 +812,7 @@ function App() {
                                             <ion-icon name="mail-outline"></ion-icon>
                                           }
                                         />
-                                        <Input type='email' placeholder='Email Address' />
+                                        <Input type='email' value={email} name="email" onChange={handleChange} placeholder='Email Address' />
                                       </InputGroup>
                                     </div>
                                     <div className='col-md-6'>
@@ -739,7 +823,7 @@ function App() {
                                             <ion-icon name="call-outline"></ion-icon>
                                           }
                                         />
-                                        <Input type='tel' placeholder='Phone Number' />
+                                        <Input type='tel' value={phone} name="phone" onChange={handleChange} placeholder='Phone Number' />
                                       </InputGroup>
                                     </div>
                                   </div>
@@ -753,7 +837,7 @@ function App() {
                                             <ion-icon name="location-outline"></ion-icon>
                                           }
                                         />
-                                        <Input type='text' placeholder='Location Address' />
+                                        <Input type='text' value={location} name="location" onChange={handleChange} placeholder='Location Address' />
                                       </InputGroup>
                                     </div>
                                   </div>
@@ -764,7 +848,7 @@ function App() {
                                   <Button colorScheme='red' mr={3} onClick={onAdd2Close}>
                                     Close
                                   </Button>
-                                  <Button rightIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue'>Add Teacher</Button>
+                                  <Button onClick={createStudent} rightIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue'>{id === null ? "Add" : "Update"} Student</Button>
                                 </ModalFooter>
                               </ModalContent>
                             </Modal>
@@ -778,7 +862,7 @@ function App() {
                           studentData.map((student, index) => {
                             return (
                               <Tr key={index}>
-                                <Td>{student.name}</Td>
+                                <Td>{student.name} {student.id}</Td>
                                 <Td><center>{student.score}</center></Td>
                                 <Td className=" text-center">
                                   <a href={"mailto:" + student.email}>
@@ -792,7 +876,7 @@ function App() {
                                   </span>
                                 </Td>
                                 <Td className="text-center">
-                                  <Button className='w-50' size='sm' leftIcon={<ion-icon name="create-outline"></ion-icon>} colorScheme='yellow' variant='solid'>
+                                  <Button onClick={() => updateStudent(student)} className='w-50' size='sm' leftIcon={<ion-icon name="create-outline"></ion-icon>} colorScheme='yellow' variant='solid'>
                                     Update
                                   </Button>
 
@@ -818,7 +902,7 @@ function App() {
                                       <AlertDialogHeader>Delete Record?</AlertDialogHeader>
                                       <AlertDialogCloseButton />
                                       <AlertDialogBody>
-                                        Are you sure you want to delete record?
+                                        Are you sure you want to delete record? 
                                       </AlertDialogBody>
                                       <AlertDialogFooter>
                                         <Button ref={cancel2Ref} onClick={onDel2Close}>
