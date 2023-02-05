@@ -136,10 +136,12 @@ function App() {
 
   const deleteTeacher = (id) => {
     setTeacherData(teacherData.filter((teacher) => teacher.id !== id))
+    setID(null)
   }
 
   const deleteStudent = (id) => {
     setStudentData(studentData.filter((student) => student.id !== id))
+    setID(null)
   }
 
   const { isOpen: isDelOpen, onOpen: onDelOpen, onClose: onDelClose } = useDisclosure()
@@ -199,16 +201,57 @@ function App() {
     onAdd2Open()
   }
 
+  const updateTeacher = (data) => {
+    setID(data.id)
+    setName(data.name)
+    setEmail(data.email)
+    setPhone(data.phone)
+    setLocation(data.location)
+    setRole(data.role)
+    onAddOpen()
+  }
+
+  const addTeacher = () => {
+    setID(null)
+    setName("")
+    setEmail("")
+    setPhone("")
+    setLocation("")
+    setRole("")
+    onAddOpen()
+  }
+
   const createStudent = () => {
-    studentData.push({
-      id: students.length + 1,
-      name: name,
-      email: email,
-      phone: phone,
-      location: location,
-      score: score,
-    })
-    console.log(studentData)
+    const d = new Date();
+    if (id === null) {
+      studentData.push({
+        id: d.getTime(),
+        name: name,
+        email: email,
+        phone: phone,
+        location: location,
+        score: score,
+      })
+      setMessage({
+        type: 'success',
+        title: 'Add!',
+        desc: 'Record added successfully',
+      })
+    }
+    else {
+      var arr = studentData.findIndex((student) => student.id === id)
+      studentData[arr].name = name
+      studentData[arr].email = email
+      studentData[arr].phone = phone
+      studentData[arr].location = location
+      studentData[arr].score = score
+      console.log(studentData[arr])
+      setMessage({
+        type: 'success',
+        title: 'Update!',
+        desc: 'Record updated successfully',
+      })
+    }
     setID(null)
     setName("")
     setEmail("")
@@ -217,23 +260,39 @@ function App() {
     setRole("")
     setScore("")
     onAdd2Close()
-    setMessage({
-      type: 'success',
-      title: 'Add!',
-      desc: 'Record added successfully',
-    })
   }
 
   const createTeacher = () => {
-    teacherData.push({
-      id: teachers.length + 1,
-      name: name,
-      email: email,
-      phone: phone,
-      location: location,
-      role: role,
-    })
-    console.log(studentData)
+    const d = new Date();
+    if (id === null) {
+      teacherData.push({
+        id: d.getTime(),
+        name: name,
+        email: email,
+        phone: phone,
+        location: location,
+        role: role,
+      })
+      setMessage({
+        type: 'success',
+        title: 'Add!',
+        desc: 'Record added successfully',
+      })
+    }
+    else {
+      var arr = teacherData.findIndex((teacher) => teacher.id === id)
+      teacherData[arr].name = name
+      teacherData[arr].email = email
+      teacherData[arr].phone = phone
+      teacherData[arr].location = location
+      teacherData[arr].role = role
+      console.log(teacherData[arr])
+      setMessage({
+        type: 'success',
+        title: 'Update!',
+        desc: 'Record updated successfully',
+      })
+    }
     setID(null)
     setName("")
     setEmail("")
@@ -242,11 +301,6 @@ function App() {
     setRole("")
     setScore("")
     onAddClose()
-    setMessage({
-      type: 'success',
-      title: 'Add!',
-      desc: 'Record added successfully',
-    })
   }
 
   return (
@@ -280,7 +334,7 @@ function App() {
                   style={{ width: "24px", height: "24px" }}>
                 </lord-icon>
                 &nbsp;&nbsp;
-                <span className="tab" style={{paddingTop:"5px"}}>User Registration</span>
+                <span className="tab" style={{ paddingTop: "5px" }}>User Registration</span>
               </Tab>
               <Tab>
                 <lord-icon
@@ -291,7 +345,7 @@ function App() {
                   style={{ width: "24px", height: "24px" }}>
                 </lord-icon>
                 &nbsp;&nbsp;
-                <span className="tab" style={{paddingTop:"5px"}}>Get Authorization</span>
+                <span className="tab" style={{ paddingTop: "5px" }}>Get Authorization</span>
               </Tab>
               <Tab>
                 <lord-icon
@@ -302,7 +356,7 @@ function App() {
                   style={{ width: "24px", height: "24px" }}>
                 </lord-icon>
                 &nbsp;&nbsp;
-                <span className="tab" style={{paddingTop:"5px"}}>Teachers Records</span>
+                <span className="tab" style={{ paddingTop: "5px" }}>Teachers Records</span>
               </Tab>
               <Tab>
                 <lord-icon
@@ -313,7 +367,7 @@ function App() {
                   style={{ width: "24px", height: "24px" }}>
                 </lord-icon>
                 &nbsp;&nbsp;
-                <span className="tab" style={{paddingTop:"5px"}}>Students Records</span>
+                <span className="tab" style={{ paddingTop: "5px" }}>Students Records</span>
               </Tab>
             </TabList>
 
@@ -547,23 +601,28 @@ function App() {
                                 <ModalCloseButton />
                                 <ModalBody>
 
-                                  <Alert
-                                    status='info'
-                                    variant='subtle'
-                                    flexDirection='column'
-                                    alignItems='center'
-                                    justifyContent='center'
-                                    textAlign='center'
-                                    height='150px'
-                                    className='mb-3'>
-                                    <AlertIcon boxSize='40px' mr={0} />
-                                    <AlertTitle mt={4} mb={1} fontSize='lg'>
-                                      Create Teacher Record
-                                    </AlertTitle>
-                                    <AlertDescription maxWidth='sm'>
-                                      Enter your valid information to save a new record
-                                    </AlertDescription>
-                                  </Alert>
+                                  {
+                                    id === null ?
+                                      <>
+                                        <Alert
+                                          status='info'
+                                          variant='subtle'
+                                          flexDirection='column'
+                                          alignItems='center'
+                                          justifyContent='center'
+                                          textAlign='center'
+                                          height='150px'
+                                          className='mb-3'>
+                                          <AlertIcon boxSize='40px' mr={0} />
+                                          <AlertTitle mt={4} mb={1} fontSize='lg'>
+                                            Create Teacher Record
+                                          </AlertTitle>
+                                          <AlertDescription maxWidth='sm'>
+                                            Enter your valid information to save a new record
+                                          </AlertDescription>
+                                        </Alert>
+                                      </> : <></>
+                                  }
 
                                   <div className='row'>
                                     <div className='col-md-6'>
@@ -574,11 +633,11 @@ function App() {
                                             <ion-icon name="person-outline"></ion-icon>
                                           }
                                         />
-                                        <Input type='text' placeholder='Full Name' />
+                                        <Input type='text' placeholder='Full Name' value={name} name="name" onChange={handleChange} />
                                       </InputGroup>
                                     </div>
                                     <div className='col-md-6'>
-                                      <Select size='lg' placeholder='Select Role'>
+                                      <Select size='lg' placeholder='Select Role' value={role} name="role" onChange={handleChange}>
                                         <option value='teacher'>Teacher</option>
                                         <option value='principal'>Supervisor</option>
                                         <option value='other'>Other</option>
@@ -595,7 +654,7 @@ function App() {
                                             <ion-icon name="mail-outline"></ion-icon>
                                           }
                                         />
-                                        <Input type='email' placeholder='Email Address' />
+                                        <Input type='email' placeholder='Email Address' value={email} name="email" onChange={handleChange} />
                                       </InputGroup>
                                     </div>
                                     <div className='col-md-6'>
@@ -606,7 +665,7 @@ function App() {
                                             <ion-icon name="call-outline"></ion-icon>
                                           }
                                         />
-                                        <Input type='tel' placeholder='Phone Number' />
+                                        <Input type='tel' placeholder='Phone Number' value={phone} name="phone" onChange={handleChange} />
                                       </InputGroup>
                                     </div>
                                   </div>
@@ -620,7 +679,7 @@ function App() {
                                             <ion-icon name="location-outline"></ion-icon>
                                           }
                                         />
-                                        <Input type='text' placeholder='Location Address' />
+                                        <Input type='text' placeholder='Location Address' value={location} name="location" onChange={handleChange} />
                                       </InputGroup>
                                     </div>
                                   </div>
@@ -631,7 +690,7 @@ function App() {
                                   <Button colorScheme='red' mr={3} onClick={onAddClose}>
                                     Close
                                   </Button>
-                                  <Button rightIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue'>Add Teacher</Button>
+                                  <Button onClick={createTeacher} rightIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue'>{id === null ? "Add" : "Update"} Teacher</Button>
                                 </ModalFooter>
                               </ModalContent>
                             </Modal>
@@ -659,7 +718,8 @@ function App() {
                                   </span>
                                 </Td>
                                 <Td className="text-center">
-                                  <Button className='w-50' size='sm' leftIcon={<ion-icon name="create-outline"></ion-icon>} colorScheme='yellow' variant='solid'>
+
+                                  <Button onClick={() => updateTeacher(teacher)} className='w-50' size='sm' leftIcon={<ion-icon name="create-outline"></ion-icon>} colorScheme='yellow' variant='solid'>
                                     Update
                                   </Button>
 
@@ -685,7 +745,7 @@ function App() {
                                       <AlertDialogHeader>Delete Record?</AlertDialogHeader>
                                       <AlertDialogCloseButton />
                                       <AlertDialogBody>
-                                        Are you sure you want to delete record? {id}
+                                        Are you sure you want to delete record?
                                       </AlertDialogBody>
                                       <AlertDialogFooter>
                                         <Button ref={cancelRef} onClick={onDelClose}>
@@ -705,6 +765,7 @@ function App() {
                                         </Button>
                                       </AlertDialogFooter>
                                     </AlertDialogContent>
+
                                   </AlertDialog>
 
                                 </Td>
@@ -862,7 +923,7 @@ function App() {
                           studentData.map((student, index) => {
                             return (
                               <Tr key={index}>
-                                <Td>{student.name} {student.id}</Td>
+                                <Td>{student.name}</Td>
                                 <Td><center>{student.score}</center></Td>
                                 <Td className=" text-center">
                                   <a href={"mailto:" + student.email}>
@@ -902,7 +963,7 @@ function App() {
                                       <AlertDialogHeader>Delete Record?</AlertDialogHeader>
                                       <AlertDialogCloseButton />
                                       <AlertDialogBody>
-                                        Are you sure you want to delete record? 
+                                        Are you sure you want to delete record?
                                       </AlertDialogBody>
                                       <AlertDialogFooter>
                                         <Button ref={cancel2Ref} onClick={onDel2Close}>
