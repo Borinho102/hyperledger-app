@@ -1048,7 +1048,9 @@ function App() {
                   </h2>
 
                   <TableContainer className='mt-5 border rounded-3'>
+
                     <Table variant='simple'>
+                      
                       <TableCaption className='link pb-4'>School Organization</TableCaption>
 
                       <Thead className='bg-dark'>
@@ -1438,6 +1440,7 @@ function App() {
                           })
                         }
                       </Tbody>
+
                       <Tfoot className='bg-dark'>
                         <Tr>
                           <Th className='text-white'>School Name</Th>
@@ -1447,7 +1450,9 @@ function App() {
                           </Th>
                         </Tr>
                       </Tfoot>
+
                     </Table>
+
                   </TableContainer>
 
                 </div>
