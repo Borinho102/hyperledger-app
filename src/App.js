@@ -79,27 +79,27 @@ function App() {
   const teachers = [
     {
       id: 1,
-      name: 'John Doe',
-      email: 'john@doe.com',
+      name: 'College Jean Tabi',
+      email: 'infos@jeantabi.com',
       phone: '+237651796157',
       location: 'Yaounde, Cameroon',
-      role: 'teacher',
+      role: 'privee',
     },
     {
       id: 2,
-      name: 'John Smith',
-      email: 'john@smith.com',
+      name: 'Lycee Classique de Bafoussam',
+      email: 'lyclabaf@minesec.cm',
       phone: '+237657758401',
-      location: 'Douala, Cameroon',
-      role: 'teacher',
+      location: 'Bafoussam, Cameroon',
+      role: 'publique',
     },
     {
       id: 3,
-      name: 'John Lane',
-      email: 'john@lane.com',
+      name: 'GTHS Bamenda',
+      email: 'bamenda@gths.com',
       phone: '+237657798765',
-      location: 'Bafoussam, Cameroon',
-      role: 'principal',
+      location: 'Bamenda, Cameroon',
+      role: 'publique',
     }
   ]
 
@@ -349,14 +349,14 @@ function App() {
               </Tab>
               <Tab>
                 <lord-icon
-                  src="https://cdn.lordicon.com/fbdgkenc.json"
+                  src="https://cdn.lordicon.com/osuxyevn.json"
                   trigger="hover"
                   className="icon"
                   colors="primary:#121331"
                   style={{ width: "24px", height: "24px" }}>
                 </lord-icon>
                 &nbsp;&nbsp;
-                <span className="tab" style={{ paddingTop: "5px" }}>Teachers Records</span>
+                <span className="tab" style={{ paddingTop: "5px" }}>School Records</span>
               </Tab>
               <Tab>
                 <lord-icon
@@ -367,7 +367,18 @@ function App() {
                   style={{ width: "24px", height: "24px" }}>
                 </lord-icon>
                 &nbsp;&nbsp;
-                <span className="tab" style={{ paddingTop: "5px" }}>Students Records</span>
+                <span className="tab" style={{ paddingTop: "5px" }}>Student Records</span>
+              </Tab>
+              <Tab>
+                <lord-icon
+                  src="https://cdn.lordicon.com/uitzjnpu.json"
+                  trigger="hover"
+                  className="icon"
+                  colors="primary:#121331"
+                  style={{ width: "24px", height: "24px" }}>
+                </lord-icon>
+                &nbsp;&nbsp;
+                <span className="tab" style={{ paddingTop: "5px" }}>Organization</span>
               </Tab>
             </TabList>
 
@@ -577,17 +588,17 @@ function App() {
                 <div className="py-5">
 
                   <h2 className="fw-bold text-center fs-4">
-                    Teacher Records
+                    School Records
                   </h2>
 
                   <TableContainer className='mt-5 border rounded-3'>
                     <Table variant='simple'>
-                      <TableCaption className='link pb-4'>All Teachers Records</TableCaption>
+                      <TableCaption className='link pb-4'>All School Records</TableCaption>
 
                       <Thead className='bg-dark'>
                         <Tr>
-                          <Th className='text-white'>Full Name</Th>
-                          <Th className='text-white'>Role</Th>
+                          <Th className='text-white'>Name</Th>
+                          <Th className='text-white'>Type</Th>
                           <Th className='text-white text-center'>Contact</Th>
                           <Th className='text-white text-center'>
 
@@ -597,7 +608,7 @@ function App() {
                             <Modal size={'3xl'} closeOnOverlayClick={false} isOpen={isAddOpen} onClose={onAddClose} isCentered>
                               <ModalOverlay />
                               <ModalContent>
-                                <ModalHeader>Add New Teacher</ModalHeader>
+                                <ModalHeader>Add New School</ModalHeader>
                                 <ModalCloseButton />
                                 <ModalBody>
 
@@ -615,7 +626,7 @@ function App() {
                                           className='mb-3'>
                                           <AlertIcon boxSize='40px' mr={0} />
                                           <AlertTitle mt={4} mb={1} fontSize='lg'>
-                                            Create Teacher Record
+                                            Create School Record
                                           </AlertTitle>
                                           <AlertDescription maxWidth='sm'>
                                             Enter your valid information to save a new record
@@ -637,9 +648,9 @@ function App() {
                                       </InputGroup>
                                     </div>
                                     <div className='col-md-6'>
-                                      <Select size='lg' placeholder='Select Role' value={role} name="role" onChange={handleChange}>
-                                        <option value='teacher'>Teacher</option>
-                                        <option value='principal'>Supervisor</option>
+                                      <Select size='lg' placeholder='Select Type' value={role} name="role" onChange={handleChange}>
+                                        <option value='publique'>Public</option>
+                                        <option value='privee'>Private</option>
                                         <option value='other'>Other</option>
                                       </Select>
                                     </div>
@@ -690,7 +701,7 @@ function App() {
                                   <Button colorScheme='red' mr={3} onClick={onAddClose}>
                                     Close
                                   </Button>
-                                  <Button onClick={createTeacher} rightIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue'>{id === null ? "Add" : "Update"} Teacher</Button>
+                                  <Button onClick={createTeacher} rightIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue'>{id === null ? "Add" : "Update"} School</Button>
                                 </ModalFooter>
                               </ModalContent>
                             </Modal>
@@ -774,10 +785,11 @@ function App() {
                           })
                         }
                       </Tbody>
+
                       <Tfoot className='bg-dark'>
                         <Tr>
-                          <Th className='text-white'>Full Name</Th>
-                          <Th className='text-white'>Role</Th>
+                          <Th className='text-white'>Name</Th>
+                          <Th className='text-white'>Type</Th>
                           <Th className='text-white text-center'>Contact</Th>
                           <Th className='text-white text-center'>
                             Actions
@@ -902,6 +914,438 @@ function App() {
                                       </InputGroup>
                                     </div>
                                   </div>
+
+                                </ModalBody>
+
+                                <ModalFooter>
+                                  <Button colorScheme='red' mr={3} onClick={onAdd2Close}>
+                                    Close
+                                  </Button>
+                                  <Button onClick={createStudent} rightIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue'>{id === null ? "Add" : "Update"} Student</Button>
+                                </ModalFooter>
+                              </ModalContent>
+                            </Modal>
+
+                          </Th>
+                        </Tr>
+                      </Thead>
+
+                      <Tbody>
+                        {
+                          studentData.map((student, index) => {
+                            return (
+                              <Tr key={index}>
+                                <Td>{student.name}</Td>
+                                <Td><center>{student.score}</center></Td>
+                                <Td className=" text-center">
+                                  <a href={"mailto:" + student.email}>
+                                    <Tooltip label={'Write to ' + student.email}><ion-icon size="large" name="mail-outline"></ion-icon></Tooltip>
+                                  </a>
+                                  <a href={"tel:" + student.phone} className="mx-4">
+                                    <Tooltip label={'Call ' + student.phone}><ion-icon size="large" name="call-outline"></ion-icon></Tooltip>
+                                  </a>
+                                  <span>
+                                    <Tooltip label={student.location}><ion-icon size="large" name="location-outline"></ion-icon></Tooltip>
+                                  </span>
+                                </Td>
+                                <Td className="text-center">
+                                  <Button onClick={() => updateStudent(student)} className='w-50' size='sm' leftIcon={<ion-icon name="create-outline"></ion-icon>} colorScheme='yellow' variant='solid'>
+                                    Update
+                                  </Button>
+
+                                  &nbsp;
+
+                                  <Button onClick={() => {
+                                    setID(student.id)
+                                    onDel2Open()
+                                  }} className='w-25' size='sm' leftIcon={<ion-icon name="trash-outline"></ion-icon>} colorScheme='red' variant='solid'>
+                                    Detele
+                                  </Button>
+
+                                  <AlertDialog
+                                    motionPreset='slideInBottom'
+                                    leastDestructiveRef={cancel2Ref}
+                                    onClose={onDel2Close}
+                                    isOpen={isDel2Open}
+                                    isCentered
+                                  >
+                                    <AlertDialogOverlay />
+
+                                    <AlertDialogContent>
+                                      <AlertDialogHeader>Delete Record?</AlertDialogHeader>
+                                      <AlertDialogCloseButton />
+                                      <AlertDialogBody>
+                                        Are you sure you want to delete record?
+                                      </AlertDialogBody>
+                                      <AlertDialogFooter>
+                                        <Button ref={cancel2Ref} onClick={onDel2Close}>
+                                          No
+                                        </Button>
+                                        <Button onClick={() => {
+                                          deleteStudent(id)
+                                          onDel2Close()
+                                          setMessage({
+                                            type: 'success',
+                                            title: 'Delete!',
+                                            desc: 'Record deleted successfully',
+                                          })
+                                        }
+                                        } colorScheme='red' ml={3}>
+                                          Yes
+                                        </Button>
+                                      </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                  </AlertDialog>
+
+                                </Td>
+                              </Tr>
+                            )
+                          })
+                        }
+                      </Tbody>
+                      <Tfoot className='bg-dark'>
+                        <Tr>
+                          <Th className='text-white'>Full Name</Th>
+                          <Th className='text-white'><center>Score</center></Th>
+                          <Th className='text-white text-center'>Contact</Th>
+                          <Th className='text-white text-center'>
+                            Actions
+                          </Th>
+                        </Tr>
+                      </Tfoot>
+                    </Table>
+                  </TableContainer>
+
+                </div>
+              </TabPanel>
+
+              <TabPanel>
+                <div className="py-5">
+
+                  <h2 className="fw-bold text-center fs-4">
+                    Organization
+                  </h2>
+
+                  <TableContainer className='mt-5 border rounded-3'>
+                    <Table variant='simple'>
+                      <TableCaption className='link pb-4'>School Organization</TableCaption>
+
+                      <Thead className='bg-dark'>
+                        <Tr>
+                          <Th className='text-white'>Full Name</Th>
+                          <Th className='text-white'><center>Score</center></Th>
+                          <Th className='text-white text-center'>Contact</Th>
+                          <Th className='text-white text-center'>
+
+                            <Button onClick={addStudent} className='w-75' leftIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue' size='sm' variant='solid'>
+                              Add record
+                            </Button>
+                            <Modal size={'3xl'} closeOnOverlayClick={false} isOpen={isAdd2Open} onClose={onAdd2Close} isCentered>
+                              <ModalOverlay />
+                              <ModalContent>
+                                <ModalHeader>{id === null ? "Add" : "Update"} New Student</ModalHeader>
+                                <ModalCloseButton />
+                                <ModalBody>
+
+                                  {
+                                    id === null ?
+                                      <>
+                                        <Alert
+                                          status='info'
+                                          variant='subtle'
+                                          flexDirection='column'
+                                          alignItems='center'
+                                          justifyContent='center'
+                                          textAlign='center'
+                                          height='150px'
+                                          className='mb-3'>
+                                          <AlertIcon boxSize='40px' mr={0} />
+                                          <AlertTitle mt={4} mb={1} fontSize='lg'>
+                                            Create Student Record
+                                          </AlertTitle>
+                                          <AlertDescription maxWidth='sm'>
+                                            Enter your valid information to save a new record
+                                          </AlertDescription>
+                                        </Alert>
+                                      </> : <></>
+                                  }
+
+                                  <div className='row'>
+                                    <div className='col-md-6'>
+                                      <InputGroup size='lg' className="mb-4">
+                                        <InputLeftElement
+                                          pointerEvents='none'
+                                          children={
+                                            <ion-icon name="person-outline"></ion-icon>
+                                          }
+                                        />
+                                        <Input type='text' value={name} name="name" onChange={handleChange} placeholder='Full Name' />
+                                      </InputGroup>
+                                    </div>
+                                    <div className='col-md-6'>
+                                      <NumberInput defaultValue={score} precision={2} step={0.1}>
+                                        <NumberInputField placeholder='Average Score' value={score} onChange={(e) => setScore(e.target.value)} name="score" />
+                                        <NumberInputStepper>
+                                          <NumberIncrementStepper />
+                                          <NumberDecrementStepper />
+                                        </NumberInputStepper>
+                                      </NumberInput>
+                                    </div>
+                                  </div>
+
+                                  <div className='row'>
+                                    <div className='col-md-6'>
+                                      <InputGroup size='lg' className="mb-4">
+                                        <InputLeftElement
+                                          pointerEvents='none'
+                                          children={
+                                            <ion-icon name="mail-outline"></ion-icon>
+                                          }
+                                        />
+                                        <Input type='email' value={email} name="email" onChange={handleChange} placeholder='Email Address' />
+                                      </InputGroup>
+                                    </div>
+                                    <div className='col-md-6'>
+                                      <InputGroup size='lg' className="mb-4">
+                                        <InputLeftElement
+                                          pointerEvents='none'
+                                          children={
+                                            <ion-icon name="call-outline"></ion-icon>
+                                          }
+                                        />
+                                        <Input type='tel' value={phone} name="phone" onChange={handleChange} placeholder='Phone Number' />
+                                      </InputGroup>
+                                    </div>
+                                  </div>
+
+                                  <div className='row'>
+                                    <div className='col-md-12'>
+                                      <InputGroup size='lg' className="mb-4">
+                                        <InputLeftElement
+                                          pointerEvents='none'
+                                          children={
+                                            <ion-icon name="location-outline"></ion-icon>
+                                          }
+                                        />
+                                        <Input type='text' value={location} name="location" onChange={handleChange} placeholder='Location Address' />
+                                      </InputGroup>
+                                    </div>
+                                    <TabPanel>
+                                      <div className="py-5">
+
+                                        <h2 className="fw-bold text-center fs-4">
+                                          Students Records
+                                        </h2>
+
+                                        <TableContainer className='mt-5 border rounded-3'>
+                                          <Table variant='simple'>
+                                            <TableCaption className='link pb-4'>All Students Records</TableCaption>
+
+                                            <Thead className='bg-dark'>
+                                              <Tr>
+                                                <Th className='text-white'>Full Name</Th>
+                                                <Th className='text-white'><center>Score</center></Th>
+                                                <Th className='text-white text-center'>Contact</Th>
+                                                <Th className='text-white text-center'>
+
+                                                  <Button onClick={addStudent} className='w-75' leftIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue' size='sm' variant='solid'>
+                                                    Add record
+                                                  </Button>
+                                                  <Modal size={'3xl'} closeOnOverlayClick={false} isOpen={isAdd2Open} onClose={onAdd2Close} isCentered>
+                                                    <ModalOverlay />
+                                                    <ModalContent>
+                                                      <ModalHeader>{id === null ? "Add" : "Update"} New Student</ModalHeader>
+                                                      <ModalCloseButton />
+                                                      <ModalBody>
+
+                                                        {
+                                                          id === null ?
+                                                            <>
+                                                              <Alert
+                                                                status='info'
+                                                                variant='subtle'
+                                                                flexDirection='column'
+                                                                alignItems='center'
+                                                                justifyContent='center'
+                                                                textAlign='center'
+                                                                height='150px'
+                                                                className='mb-3'>
+                                                                <AlertIcon boxSize='40px' mr={0} />
+                                                                <AlertTitle mt={4} mb={1} fontSize='lg'>
+                                                                  Create Student Record
+                                                                </AlertTitle>
+                                                                <AlertDescription maxWidth='sm'>
+                                                                  Enter your valid information to save a new record
+                                                                </AlertDescription>
+                                                              </Alert>
+                                                            </> : <></>
+                                                        }
+
+                                                        <div className='row'>
+                                                          <div className='col-md-6'>
+                                                            <InputGroup size='lg' className="mb-4">
+                                                              <InputLeftElement
+                                                                pointerEvents='none'
+                                                                children={
+                                                                  <ion-icon name="person-outline"></ion-icon>
+                                                                }
+                                                              />
+                                                              <Input type='text' value={name} name="name" onChange={handleChange} placeholder='Full Name' />
+                                                            </InputGroup>
+                                                          </div>
+                                                          <div className='col-md-6'>
+                                                            <NumberInput defaultValue={score} precision={2} step={0.1}>
+                                                              <NumberInputField placeholder='Average Score' value={score} onChange={(e) => setScore(e.target.value)} name="score" />
+                                                              <NumberInputStepper>
+                                                                <NumberIncrementStepper />
+                                                                <NumberDecrementStepper />
+                                                              </NumberInputStepper>
+                                                            </NumberInput>
+                                                          </div>
+                                                        </div>
+
+                                                        <div className='row'>
+                                                          <div className='col-md-6'>
+                                                            <InputGroup size='lg' className="mb-4">
+                                                              <InputLeftElement
+                                                                pointerEvents='none'
+                                                                children={
+                                                                  <ion-icon name="mail-outline"></ion-icon>
+                                                                }
+                                                              />
+                                                              <Input type='email' value={email} name="email" onChange={handleChange} placeholder='Email Address' />
+                                                            </InputGroup>
+                                                          </div>
+                                                          <div className='col-md-6'>
+                                                            <InputGroup size='lg' className="mb-4">
+                                                              <InputLeftElement
+                                                                pointerEvents='none'
+                                                                children={
+                                                                  <ion-icon name="call-outline"></ion-icon>
+                                                                }
+                                                              />
+                                                              <Input type='tel' value={phone} name="phone" onChange={handleChange} placeholder='Phone Number' />
+                                                            </InputGroup>
+                                                          </div>
+                                                        </div>
+
+                                                        <div className='row'>
+                                                          <div className='col-md-12'>
+                                                            <InputGroup size='lg' className="mb-4">
+                                                              <InputLeftElement
+                                                                pointerEvents='none'
+                                                                children={
+                                                                  <ion-icon name="location-outline"></ion-icon>
+                                                                }
+                                                              />
+                                                              <Input type='text' value={location} name="location" onChange={handleChange} placeholder='Location Address' />
+                                                            </InputGroup>
+                                                          </div>
+                                                        </div>
+
+                                                      </ModalBody>
+
+                                                      <ModalFooter>
+                                                        <Button colorScheme='red' mr={3} onClick={onAdd2Close}>
+                                                          Close
+                                                        </Button>
+                                                        <Button onClick={createStudent} rightIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue'>{id === null ? "Add" : "Update"} Student</Button>
+                                                      </ModalFooter>
+                                                    </ModalContent>
+                                                  </Modal>
+
+                                                </Th>
+                                              </Tr>
+                                            </Thead>
+
+                                            <Tbody>
+                                              {
+                                                studentData.map((student, index) => {
+                                                  return (
+                                                    <Tr key={index}>
+                                                      <Td>{student.name}</Td>
+                                                      <Td><center>{student.score}</center></Td>
+                                                      <Td className=" text-center">
+                                                        <a href={"mailto:" + student.email}>
+                                                          <Tooltip label={'Write to ' + student.email}><ion-icon size="large" name="mail-outline"></ion-icon></Tooltip>
+                                                        </a>
+                                                        <a href={"tel:" + student.phone} className="mx-4">
+                                                          <Tooltip label={'Call ' + student.phone}><ion-icon size="large" name="call-outline"></ion-icon></Tooltip>
+                                                        </a>
+                                                        <span>
+                                                          <Tooltip label={student.location}><ion-icon size="large" name="location-outline"></ion-icon></Tooltip>
+                                                        </span>
+                                                      </Td>
+                                                      <Td className="text-center">
+                                                        <Button onClick={() => updateStudent(student)} className='w-50' size='sm' leftIcon={<ion-icon name="create-outline"></ion-icon>} colorScheme='yellow' variant='solid'>
+                                                          Update
+                                                        </Button>
+
+                                                        &nbsp;
+
+                                                        <Button onClick={() => {
+                                                          setID(student.id)
+                                                          onDel2Open()
+                                                        }} className='w-25' size='sm' leftIcon={<ion-icon name="trash-outline"></ion-icon>} colorScheme='red' variant='solid'>
+                                                          Detele
+                                                        </Button>
+
+                                                        <AlertDialog
+                                                          motionPreset='slideInBottom'
+                                                          leastDestructiveRef={cancel2Ref}
+                                                          onClose={onDel2Close}
+                                                          isOpen={isDel2Open}
+                                                          isCentered
+                                                        >
+                                                          <AlertDialogOverlay />
+
+                                                          <AlertDialogContent>
+                                                            <AlertDialogHeader>Delete Record?</AlertDialogHeader>
+                                                            <AlertDialogCloseButton />
+                                                            <AlertDialogBody>
+                                                              Are you sure you want to delete record?
+                                                            </AlertDialogBody>
+                                                            <AlertDialogFooter>
+                                                              <Button ref={cancel2Ref} onClick={onDel2Close}>
+                                                                No
+                                                              </Button>
+                                                              <Button onClick={() => {
+                                                                deleteStudent(id)
+                                                                onDel2Close()
+                                                                setMessage({
+                                                                  type: 'success',
+                                                                  title: 'Delete!',
+                                                                  desc: 'Record deleted successfully',
+                                                                })
+                                                              }
+                                                              } colorScheme='red' ml={3}>
+                                                                Yes
+                                                              </Button>
+                                                            </AlertDialogFooter>
+                                                          </AlertDialogContent>
+                                                        </AlertDialog>
+
+                                                      </Td>
+                                                    </Tr>
+                                                  )
+                                                })
+                                              }
+                                            </Tbody>
+                                            <Tfoot className='bg-dark'>
+                                              <Tr>
+                                                <Th className='text-white'>Full Name</Th>
+                                                <Th className='text-white'><center>Score</center></Th>
+                                                <Th className='text-white text-center'>Contact</Th>
+                                                <Th className='text-white text-center'>
+                                                  Actions
+                                                </Th>
+                                              </Tr>
+                                            </Tfoot>
+                                          </Table>
+                                        </TableContainer>
+
+                                      </div>
+                                    </TabPanel>      </div>
 
                                 </ModalBody>
 
