@@ -76,6 +76,16 @@ function App() {
     setTabIndex(index)
   }
 
+  const orgs = [
+    {
+      id: 0,
+      school_id: 1,
+      school_name: 'College Jean Tabi',
+      student_id: 2,
+      student_name: 'Student Boris',
+    }
+  ]
+
   const teachers = [
     {
       id: 1,
@@ -150,8 +160,12 @@ function App() {
   const { isOpen: isDel2Open, onOpen: onDel2Open, onClose: onDel2Close } = useDisclosure()
   const { isOpen: isAdd2Open, onOpen: onAdd2Open, onClose: onAdd2Close } = useDisclosure()
 
+  const { isOpen: isDel3Open, onOpen: onDel3Open, onClose: onDel3Close } = useDisclosure()
+  const { isOpen: isAdd3Open, onOpen: onAdd3Open, onClose: onAdd3Close } = useDisclosure()
+
   const cancelRef = useRef()
   const cancel2Ref = useRef()
+  const cancel3Ref = useRef()
 
   const [id, setID] = useState(null)
 
@@ -1032,15 +1046,14 @@ function App() {
 
                       <Thead className='bg-dark'>
                         <Tr>
-                          <Th className='text-white'>Full Name</Th>
-                          <Th className='text-white'><center>Score</center></Th>
-                          <Th className='text-white text-center'>Contact</Th>
+                          <Th className='text-white'>School Name</Th>
+                          <Th className='text-white'>Student Name</Th>
                           <Th className='text-white text-center'>
 
                             <Button onClick={addStudent} className='w-75' leftIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue' size='sm' variant='solid'>
-                              Add record
+                              Transfer Student
                             </Button>
-                            <Modal size={'3xl'} closeOnOverlayClick={false} isOpen={isAdd2Open} onClose={onAdd2Close} isCentered>
+                            <Modal size={'3xl'} closeOnOverlayClick={false} isOpen={isAdd3Open} onClose={onAdd3Close} isCentered>
                               <ModalOverlay />
                               <ModalContent>
                                 <ModalHeader>{id === null ? "Add" : "Update"} New Student</ModalHeader>
@@ -1350,7 +1363,7 @@ function App() {
                                 </ModalBody>
 
                                 <ModalFooter>
-                                  <Button colorScheme='red' mr={3} onClick={onAdd2Close}>
+                                  <Button colorScheme='red' mr={3} onClick={onAdd3Close}>
                                     Close
                                   </Button>
                                   <Button onClick={createStudent} rightIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue'>{id === null ? "Add" : "Update"} Student</Button>
@@ -1364,41 +1377,24 @@ function App() {
 
                       <Tbody>
                         {
-                          studentData.map((student, index) => {
+                          orgs.map((org, index) => {
                             return (
                               <Tr key={index}>
-                                <Td>{student.name}</Td>
-                                <Td><center>{student.score}</center></Td>
-                                <Td className=" text-center">
-                                  <a href={"mailto:" + student.email}>
-                                    <Tooltip label={'Write to ' + student.email}><ion-icon size="large" name="mail-outline"></ion-icon></Tooltip>
-                                  </a>
-                                  <a href={"tel:" + student.phone} className="mx-4">
-                                    <Tooltip label={'Call ' + student.phone}><ion-icon size="large" name="call-outline"></ion-icon></Tooltip>
-                                  </a>
-                                  <span>
-                                    <Tooltip label={student.location}><ion-icon size="large" name="location-outline"></ion-icon></Tooltip>
-                                  </span>
-                                </Td>
+                                <Td>{org.school_name}</Td>
+                                <Td>{org.student_name}</Td>
                                 <Td className="text-center">
-                                  <Button onClick={() => updateStudent(student)} className='w-50' size='sm' leftIcon={<ion-icon name="create-outline"></ion-icon>} colorScheme='yellow' variant='solid'>
-                                    Update
-                                  </Button>
-
-                                  &nbsp;
-
                                   <Button onClick={() => {
-                                    setID(student.id)
-                                    onDel2Open()
-                                  }} className='w-25' size='sm' leftIcon={<ion-icon name="trash-outline"></ion-icon>} colorScheme='red' variant='solid'>
+                                    setID(org.id)
+                                    onDel3Open()
+                                  }} className='w-75' size='sm' leftIcon={<ion-icon name="trash-outline"></ion-icon>} colorScheme='red' variant='solid'>
                                     Detele
                                   </Button>
 
                                   <AlertDialog
                                     motionPreset='slideInBottom'
-                                    leastDestructiveRef={cancel2Ref}
-                                    onClose={onDel2Close}
-                                    isOpen={isDel2Open}
+                                    leastDestructiveRef={cancel3Ref}
+                                    onClose={onDel3Close}
+                                    isOpen={isDel3Open}
                                     isCentered
                                   >
                                     <AlertDialogOverlay />
@@ -1410,7 +1406,7 @@ function App() {
                                         Are you sure you want to delete record?
                                       </AlertDialogBody>
                                       <AlertDialogFooter>
-                                        <Button ref={cancel2Ref} onClick={onDel2Close}>
+                                        <Button ref={cancel3Ref} onClick={onDel2Close}>
                                           No
                                         </Button>
                                         <Button onClick={() => {
@@ -1437,9 +1433,8 @@ function App() {
                       </Tbody>
                       <Tfoot className='bg-dark'>
                         <Tr>
-                          <Th className='text-white'>Full Name</Th>
-                          <Th className='text-white'><center>Score</center></Th>
-                          <Th className='text-white text-center'>Contact</Th>
+                          <Th className='text-white'>School Name</Th>
+                          <Th className='text-white'>Student Name</Th>
                           <Th className='text-white text-center'>
                             Actions
                           </Th>
