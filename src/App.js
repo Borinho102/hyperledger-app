@@ -144,6 +144,8 @@ function App() {
 
   const [studentData, setStudentData] = useState(students)
 
+  const [orgData, setOrgData] = useState(orgs)
+
   const deleteTeacher = (id) => {
     setTeacherData(teacherData.filter((teacher) => teacher.id !== id))
     setID(null)
@@ -151,6 +153,11 @@ function App() {
 
   const deleteStudent = (id) => {
     setStudentData(studentData.filter((student) => student.id !== id))
+    setID(null)
+  }
+
+  const deleteOrg = (id) => {
+    setOrgData(orgData.filter((org) => org.id !== id))
     setID(null)
   }
 
@@ -1377,7 +1384,7 @@ function App() {
 
                       <Tbody>
                         {
-                          orgs.map((org, index) => {
+                          orgData.map((org, index) => {
                             return (
                               <Tr key={index}>
                                 <Td>{org.school_name}</Td>
@@ -1406,12 +1413,12 @@ function App() {
                                         Are you sure you want to delete record?
                                       </AlertDialogBody>
                                       <AlertDialogFooter>
-                                        <Button ref={cancel3Ref} onClick={onDel2Close}>
+                                        <Button ref={cancel3Ref} onClick={onDel3Close}>
                                           No
                                         </Button>
                                         <Button onClick={() => {
-                                          deleteStudent(id)
-                                          onDel2Close()
+                                          deleteOrg(id)
+                                          onDel3Close()
                                           setMessage({
                                             type: 'success',
                                             title: 'Delete!',
