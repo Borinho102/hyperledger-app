@@ -7,7 +7,7 @@
 }
 
 .App-container {
-  min-width: 120vh !important;
+  min-width: 130vh !important;
 }
 
 .App-header {
@@ -48,7 +48,7 @@
 }
 @media(max-width: 768px) {
   .App-container {
-    min-width: 85vh !important;
+    min-width: 95vh !important;
   }
   .tab {
     display:none;
