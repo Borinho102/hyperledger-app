@@ -7,7 +7,7 @@
 }
 
 .App-container {
-  min-width: 130vh !important;
+  min-width: 150vh !important;
 }
 
 .App-header {
@@ -46,7 +46,7 @@
 .icon, .tab {
   display: block;
 }
-@media(max-width: 768px) {
+@media(max-width: 991px) {
   .App-container {
     min-width: 95vh !important;
   }

@@ -76,13 +76,54 @@ function App() {
     setTabIndex(index)
   }
 
+  const [tab2Index, setTab2Index] = useState(0)
+
+  const handleTabs2Change = (index) => {
+    setTab2Index(index)
+  }
+
   const orgs = [
     {
       id: 0,
       school_id: 1,
       school_name: 'College Jean Tabi',
-      student_id: 2,
-      student_name: 'Student Boris',
+      teachers: [
+        {
+          id: 1,
+          name: 'M SANDEU Boris',
+        }
+      ],
+      students: [
+        {
+          id: 1,
+          name: 'Student Fabrice',
+        },
+        {
+          id: 2,
+          name: 'Student Max',
+        }
+      ]
+    },
+    {
+      id: 1,
+      school_id: 2,
+      school_name: 'College Du Vaal',
+      teachers: [
+        {
+          id: 2,
+          name: 'M SANDEU Fabrice',
+        },
+        {
+          id: 3,
+          name: 'Mlle DJAI Diane',
+        }
+      ],
+      students: [
+        {
+          id: 1,
+          name: 'Student Boris',
+        },
+      ]
     }
   ]
 
@@ -220,7 +261,9 @@ function App() {
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
   const [location, setLocation] = useState("")
-
+  const [school, setSchool] = useState("")
+  const [teacher, setTeacher] = useState("")
+  const [student, setStudent] = useState("")
   const year = new Date().getFullYear()
   const [message, setMessage] = useState(null)
 
@@ -233,6 +276,9 @@ function App() {
       case 'name': setName(value); break;
       case 'role': setRole(value); break;
       case 'score': setRole(value); break;
+      case 'teacher': setTeacher(value); break;
+      case 'student': setStudent(value); break;
+      case 'school': setSchool(value); break;
       case 'email': setEmail(value); break;
       case 'phone': setPhone(value); break;
       case 'location': setLocation(value); break;
@@ -258,6 +304,11 @@ function App() {
     setLocation("")
     setScore("")
     onAdd2Open()
+  }
+
+  const addTransfer = () => {
+    setID(null)
+    onAdd3Open()
   }
 
   const updateTeacher = (data) => {
@@ -1374,25 +1425,25 @@ function App() {
                     Organization
                   </h2>
 
-                  <TableContainer className='mt-5 border rounded-3'>
+                  <TableContainer className='mt-5 border rounded-3' style={{maxHeight: "500px", overflow:"auto"}}>
 
                     <Table variant='simple'>
-                      
+
                       <TableCaption className='link pb-4'>School Organization</TableCaption>
 
                       <Thead className='bg-dark'>
                         <Tr>
                           <Th className='text-white'>School Name</Th>
-                          <Th className='text-white'>Student Name</Th>
+                          <Th className='text-white'>Members</Th>
                           <Th className='text-white text-center'>
 
-                            <Button onClick={addStudent} className='w-75' leftIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue' size='sm' variant='solid'>
-                              Transfer Student
+                            <Button onClick={addTransfer} className='w-75' leftIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='green' size='sm' variant='solid'>
+                              Transfer
                             </Button>
                             <Modal size={'3xl'} closeOnOverlayClick={false} isOpen={isAdd3Open} onClose={onAdd3Close} isCentered>
                               <ModalOverlay />
                               <ModalContent>
-                                <ModalHeader>{id === null ? "Add" : "Update"} New Student</ModalHeader>
+                                <ModalHeader>{id === null ? "Add" : "Update"} New Transfer</ModalHeader>
                                 <ModalCloseButton />
                                 <ModalBody>
 
@@ -1400,7 +1451,7 @@ function App() {
                                     id === null ?
                                       <>
                                         <Alert
-                                          status='info'
+                                          status='success'
                                           variant='subtle'
                                           flexDirection='column'
                                           alignItems='center'
@@ -1410,299 +1461,89 @@ function App() {
                                           className='mb-3'>
                                           <AlertIcon boxSize='40px' mr={0} />
                                           <AlertTitle mt={4} mb={1} fontSize='lg'>
-                                            Create Student Record
+                                            Create Transfer Record
                                           </AlertTitle>
                                           <AlertDescription maxWidth='sm'>
-                                            Enter your valid information to save a new record
+                                            Choose a school and a member entity to tansfer in Organization
                                           </AlertDescription>
                                         </Alert>
                                       </> : <></>
                                   }
 
-                                  <div className='row'>
-                                    <div className='col-md-6'>
-                                      <InputGroup size='lg' className="mb-4">
-                                        <InputLeftElement
-                                          pointerEvents='none'
-                                          children={
-                                            <ion-icon name="person-outline"></ion-icon>
-                                          }
-                                        />
-                                        <Input type='text' value={name} name="name" onChange={handleChange} placeholder='Full Name' />
-                                      </InputGroup>
-                                    </div>
-                                    <div className='col-md-6'>
-                                      <NumberInput defaultValue={score} precision={2} step={0.1}>
-                                        <NumberInputField placeholder='Average Score' value={score} onChange={(e) => setScore(e.target.value)} name="score" />
-                                        <NumberInputStepper>
-                                          <NumberIncrementStepper />
-                                          <NumberDecrementStepper />
-                                        </NumberInputStepper>
-                                      </NumberInput>
-                                    </div>
-                                  </div>
+                                  <Tabs isFitted colorScheme='green' index={tab2Index} onChange={handleTabs2Change}>
 
-                                  <div className='row'>
-                                    <div className='col-md-6'>
-                                      <InputGroup size='lg' className="mb-4">
-                                        <InputLeftElement
-                                          pointerEvents='none'
-                                          children={
-                                            <ion-icon name="mail-outline"></ion-icon>
-                                          }
-                                        />
-                                        <Input type='email' value={email} name="email" onChange={handleChange} placeholder='Email Address' />
-                                      </InputGroup>
-                                    </div>
-                                    <div className='col-md-6'>
-                                      <InputGroup size='lg' className="mb-4">
-                                        <InputLeftElement
-                                          pointerEvents='none'
-                                          children={
-                                            <ion-icon name="call-outline"></ion-icon>
-                                          }
-                                        />
-                                        <Input type='tel' value={phone} name="phone" onChange={handleChange} placeholder='Phone Number' />
-                                      </InputGroup>
-                                    </div>
-                                  </div>
+                                    <TabList>
+                                      <Tab>
+                                        Teacher
+                                      </Tab>
+                                      <Tab>
+                                        Student
+                                      </Tab>
+                                    </TabList>
 
-                                  <div className='row'>
-                                    <div className='col-md-12'>
-                                      <InputGroup size='lg' className="mb-4">
-                                        <InputLeftElement
-                                          pointerEvents='none'
-                                          children={
-                                            <ion-icon name="location-outline"></ion-icon>
-                                          }
-                                        />
-                                        <Input type='text' value={location} name="location" onChange={handleChange} placeholder='Location Address' />
-                                      </InputGroup>
-                                    </div>
-                                    <TabPanel>
-                                      <div className="py-5">
+                                    <TabPanels>
 
-                                        <h2 className="fw-bold text-center fs-4">
-                                          Students Records
-                                        </h2>
-
-                                        <TableContainer className='mt-5 border rounded-3'>
-                                          <Table variant='simple'>
-                                            <TableCaption className='link pb-4'>All Students Records</TableCaption>
-
-                                            <Thead className='bg-dark'>
-                                              <Tr>
-                                                <Th className='text-white'>Full Name</Th>
-                                                <Th className='text-white'><center>Score</center></Th>
-                                                <Th className='text-white text-center'>Contact</Th>
-                                                <Th className='text-white text-center'>
-
-                                                  <Button onClick={addStudent} className='w-75' leftIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue' size='sm' variant='solid'>
-                                                    Add record
-                                                  </Button>
-                                                  <Modal size={'3xl'} closeOnOverlayClick={false} isOpen={isAdd2Open} onClose={onAdd2Close} isCentered>
-                                                    <ModalOverlay />
-                                                    <ModalContent>
-                                                      <ModalHeader>{id === null ? "Add" : "Update"} New Student</ModalHeader>
-                                                      <ModalCloseButton />
-                                                      <ModalBody>
-
-                                                        {
-                                                          id === null ?
-                                                            <>
-                                                              <Alert
-                                                                status='info'
-                                                                variant='subtle'
-                                                                flexDirection='column'
-                                                                alignItems='center'
-                                                                justifyContent='center'
-                                                                textAlign='center'
-                                                                height='150px'
-                                                                className='mb-3'>
-                                                                <AlertIcon boxSize='40px' mr={0} />
-                                                                <AlertTitle mt={4} mb={1} fontSize='lg'>
-                                                                  Create Student Record
-                                                                </AlertTitle>
-                                                                <AlertDescription maxWidth='sm'>
-                                                                  Enter your valid information to save a new record
-                                                                </AlertDescription>
-                                                              </Alert>
-                                                            </> : <></>
-                                                        }
-
-                                                        <div className='row'>
-                                                          <div className='col-md-6'>
-                                                            <InputGroup size='lg' className="mb-4">
-                                                              <InputLeftElement
-                                                                pointerEvents='none'
-                                                                children={
-                                                                  <ion-icon name="person-outline"></ion-icon>
-                                                                }
-                                                              />
-                                                              <Input type='text' value={name} name="name" onChange={handleChange} placeholder='Full Name' />
-                                                            </InputGroup>
-                                                          </div>
-                                                          <div className='col-md-6'>
-                                                            <NumberInput defaultValue={score} precision={2} step={0.1}>
-                                                              <NumberInputField placeholder='Average Score' value={score} onChange={(e) => setScore(e.target.value)} name="score" />
-                                                              <NumberInputStepper>
-                                                                <NumberIncrementStepper />
-                                                                <NumberDecrementStepper />
-                                                              </NumberInputStepper>
-                                                            </NumberInput>
-                                                          </div>
-                                                        </div>
-
-                                                        <div className='row'>
-                                                          <div className='col-md-6'>
-                                                            <InputGroup size='lg' className="mb-4">
-                                                              <InputLeftElement
-                                                                pointerEvents='none'
-                                                                children={
-                                                                  <ion-icon name="mail-outline"></ion-icon>
-                                                                }
-                                                              />
-                                                              <Input type='email' value={email} name="email" onChange={handleChange} placeholder='Email Address' />
-                                                            </InputGroup>
-                                                          </div>
-                                                          <div className='col-md-6'>
-                                                            <InputGroup size='lg' className="mb-4">
-                                                              <InputLeftElement
-                                                                pointerEvents='none'
-                                                                children={
-                                                                  <ion-icon name="call-outline"></ion-icon>
-                                                                }
-                                                              />
-                                                              <Input type='tel' value={phone} name="phone" onChange={handleChange} placeholder='Phone Number' />
-                                                            </InputGroup>
-                                                          </div>
-                                                        </div>
-
-                                                        <div className='row'>
-                                                          <div className='col-md-12'>
-                                                            <InputGroup size='lg' className="mb-4">
-                                                              <InputLeftElement
-                                                                pointerEvents='none'
-                                                                children={
-                                                                  <ion-icon name="location-outline"></ion-icon>
-                                                                }
-                                                              />
-                                                              <Input type='text' value={location} name="location" onChange={handleChange} placeholder='Location Address' />
-                                                            </InputGroup>
-                                                          </div>
-                                                        </div>
-
-                                                      </ModalBody>
-
-                                                      <ModalFooter>
-                                                        <Button colorScheme='red' mr={3} onClick={onAdd2Close}>
-                                                          Close
-                                                        </Button>
-                                                        <Button onClick={createStudent} rightIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue'>{id === null ? "Add" : "Update"} Student</Button>
-                                                      </ModalFooter>
-                                                    </ModalContent>
-                                                  </Modal>
-
-                                                </Th>
-                                              </Tr>
-                                            </Thead>
-
-                                            <Tbody>
+                                      <TabPanel>
+                                        <div className='row mt-4'>
+                                          <div className='col-md-6'>
+                                            <Select size='lg' placeholder='Choose School' value={school} name="school" onChange={handleChange}>
                                               {
-                                                studentData.map((student, index) => {
+                                                schoolData.map((s, k) => {
                                                   return (
-                                                    <Tr key={index}>
-                                                      <Td>{student.name}</Td>
-                                                      <Td><center>{student.score}</center></Td>
-                                                      <Td className=" text-center">
-                                                        <a href={"mailto:" + student.email}>
-                                                          <Tooltip label={'Write to ' + student.email}><ion-icon size="large" name="mail-outline"></ion-icon></Tooltip>
-                                                        </a>
-                                                        <a href={"tel:" + student.phone} className="mx-4">
-                                                          <Tooltip label={'Call ' + student.phone}><ion-icon size="large" name="call-outline"></ion-icon></Tooltip>
-                                                        </a>
-                                                        <span>
-                                                          <Tooltip label={student.location}><ion-icon size="large" name="location-outline"></ion-icon></Tooltip>
-                                                        </span>
-                                                      </Td>
-                                                      <Td className="text-center">
-                                                        <Button onClick={() => updateStudent(student)} className='w-50' size='sm' leftIcon={<ion-icon name="create-outline"></ion-icon>} colorScheme='yellow' variant='solid'>
-                                                          Update
-                                                        </Button>
-
-                                                        &nbsp;
-
-                                                        <Button onClick={() => {
-                                                          setID(student.id)
-                                                          onDel2Open()
-                                                        }} className='w-25' size='sm' leftIcon={<ion-icon name="trash-outline"></ion-icon>} colorScheme='red' variant='solid'>
-                                                          Detele
-                                                        </Button>
-
-                                                        <AlertDialog
-                                                          motionPreset='slideInBottom'
-                                                          leastDestructiveRef={cancel2Ref}
-                                                          onClose={onDel2Close}
-                                                          isOpen={isDel2Open}
-                                                          isCentered
-                                                        >
-                                                          <AlertDialogOverlay />
-
-                                                          <AlertDialogContent>
-                                                            <AlertDialogHeader>Delete Record?</AlertDialogHeader>
-                                                            <AlertDialogCloseButton />
-                                                            <AlertDialogBody>
-                                                              Are you sure you want to delete record?
-                                                            </AlertDialogBody>
-                                                            <AlertDialogFooter>
-                                                              <Button ref={cancel2Ref} onClick={onDel2Close}>
-                                                                No
-                                                              </Button>
-                                                              <Button onClick={() => {
-                                                                deleteStudent(id)
-                                                                onDel2Close()
-                                                                setMessage({
-                                                                  type: 'success',
-                                                                  title: 'Delete!',
-                                                                  desc: 'Record deleted successfully',
-                                                                })
-                                                              }
-                                                              } colorScheme='red' ml={3}>
-                                                                Yes
-                                                              </Button>
-                                                            </AlertDialogFooter>
-                                                          </AlertDialogContent>
-                                                        </AlertDialog>
-
-                                                      </Td>
-                                                    </Tr>
+                                                    <option value={s.id}>{s.name}</option>
                                                   )
                                                 })
                                               }
-                                            </Tbody>
-                                            <Tfoot className='bg-dark'>
-                                              <Tr>
-                                                <Th className='text-white'>Full Name</Th>
-                                                <Th className='text-white'><center>Score</center></Th>
-                                                <Th className='text-white text-center'>Contact</Th>
-                                                <Th className='text-white text-center'>
-                                                  Actions
-                                                </Th>
-                                              </Tr>
-                                            </Tfoot>
-                                          </Table>
-                                        </TableContainer>
+                                            </Select>
+                                          </div>
+                                          <div className='col-md-6'>
+                                            <Select size='lg' placeholder='Choose Teacher' value={teacher} name="teacher" onChange={handleChange}>
+                                              {
+                                                teacherData.map((s, k) => {
+                                                  return (
+                                                    <option value={s.id}>{s.name}</option>
+                                                  )
+                                                })
+                                              }
+                                            </Select>
+                                          </div>
+                                        </div>
+                                      </TabPanel>
+                                      <TabPanel>
+                                        <div className='row mt-4'>
+                                          <div className='col-md-6'>
+                                            <Select size='lg' placeholder='Choose School' value={school} name="school" onChange={handleChange}>
+                                              {
+                                                schoolData.map((s, k) => {
+                                                  return (
+                                                    <option value={s.id}>{s.name}</option>
+                                                  )
+                                                })
+                                              }
+                                            </Select>
+                                          </div>
+                                          <div className='col-md-6'>
+                                            <Select size='lg' placeholder='Choose Student' value={student} name="student" onChange={handleChange}>
+                                              {
+                                                studentData.map((s, k) => {
+                                                  return (
+                                                    <option value={s.id}>{s.name}</option>
+                                                  )
+                                                })
+                                              }
+                                            </Select>
+                                          </div>
+                                        </div>
+                                      </TabPanel>
 
-                                      </div>
-                                    </TabPanel>      </div>
+                                    </TabPanels>
+
+                                  </Tabs>
 
                                 </ModalBody>
 
                                 <ModalFooter>
-                                  <Button colorScheme='red' mr={3} onClick={onAdd3Close}>
-                                    Close
-                                  </Button>
-                                  <Button onClick={createStudent} rightIcon={<ion-icon name="add-outline"></ion-icon>} colorScheme='blue'>{id === null ? "Add" : "Update"} Student</Button>
+                                  <Button onClick={createStudent} colorScheme='yellow'>Transfer Entity {tab2Index}</Button>
                                 </ModalFooter>
                               </ModalContent>
                             </Modal>
@@ -1711,58 +1552,88 @@ function App() {
                         </Tr>
                       </Thead>
 
+                      <AlertDialog
+                        motionPreset='slideInBottom'
+                        leastDestructiveRef={cancel3Ref}
+                        onClose={onDel3Close}
+                        isOpen={isDel3Open}
+                        isCentered
+                      >
+                        <AlertDialogOverlay />
+
+                        <AlertDialogContent>
+                          <AlertDialogHeader>Delete Record?</AlertDialogHeader>
+                          <AlertDialogCloseButton />
+                          <AlertDialogBody>
+                            Are you sure you want to delete record?
+                          </AlertDialogBody>
+                          <AlertDialogFooter>
+                            <Button ref={cancel3Ref} onClick={onDel3Close}>
+                              No
+                            </Button>
+                            <Button onClick={() => {
+                              deleteOrg(id)
+                              onDel3Close()
+                              setMessage({
+                                type: 'success',
+                                title: 'Delete!',
+                                desc: 'Record deleted successfully',
+                              })
+                            }
+                            } colorScheme='red' ml={3}>
+                              Yes
+                            </Button>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+
                       <Tbody>
                         {
                           orgData.map((org, index) => {
                             return (
-                              <Tr key={index}>
-                                <Td>{org.school_name}</Td>
-                                <Td>{org.student_name}</Td>
-                                <Td className="text-center">
-                                  <Button onClick={() => {
-                                    setID(org.id)
-                                    onDel3Open()
-                                  }} className='w-75' size='sm' leftIcon={<ion-icon name="trash-outline"></ion-icon>} colorScheme='red' variant='solid'>
-                                    Detele
-                                  </Button>
-
-                                  <AlertDialog
-                                    motionPreset='slideInBottom'
-                                    leastDestructiveRef={cancel3Ref}
-                                    onClose={onDel3Close}
-                                    isOpen={isDel3Open}
-                                    isCentered
-                                  >
-                                    <AlertDialogOverlay />
-
-                                    <AlertDialogContent>
-                                      <AlertDialogHeader>Delete Record?</AlertDialogHeader>
-                                      <AlertDialogCloseButton />
-                                      <AlertDialogBody>
-                                        Are you sure you want to delete record?
-                                      </AlertDialogBody>
-                                      <AlertDialogFooter>
-                                        <Button ref={cancel3Ref} onClick={onDel3Close}>
-                                          No
-                                        </Button>
-                                        <Button onClick={() => {
-                                          deleteOrg(id)
-                                          onDel3Close()
-                                          setMessage({
-                                            type: 'success',
-                                            title: 'Delete!',
-                                            desc: 'Record deleted successfully',
-                                          })
-                                        }
-                                        } colorScheme='red' ml={3}>
-                                          Yes
-                                        </Button>
-                                      </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                  </AlertDialog>
-
-                                </Td>
-                              </Tr>
+                              <>
+                                <Tr key={index}>
+                                  <Th rowSpan={org.students.length + org.teachers.length + 2} style={{color:"#007bff", fontSize: "1.2rem"}}>{org.school_name}</Th>
+                                  <Td colSpan={2}><b><h4>List of Teachers</h4></b></Td>
+                                </Tr>
+                                {
+                                  org.teachers.map((s, k) => {
+                                    return (
+                                      <Tr>
+                                        <Td><span><b style={{color:"#888"}}>{s.name}</b></span></Td>
+                                        <Td className="text-center">
+                                          <Button onClick={() => {
+                                            setID(org.id)
+                                            onDel3Open()
+                                          }} className='w-75' size='sm' leftIcon={<ion-icon name="trash-outline"></ion-icon>} colorScheme='red' variant='solid'>
+                                            Remove
+                                          </Button>
+                                        </Td>
+                                      </Tr>
+                                    )
+                                  })
+                                }
+                                <Tr>
+                                  <Td colSpan={2}><b><h3>List of Students</h3></b></Td>
+                                </Tr>
+                                {
+                                  org.students.map((s, k) => {
+                                    return (
+                                      <Tr>
+                                        <Td><span><b style={{color:"#888"}}>{s.name}</b></span></Td>
+                                        <Td className="text-center">
+                                          <Button onClick={() => {
+                                            setID(org.id)
+                                            onDel3Open()
+                                          }} className='w-75' size='sm' leftIcon={<ion-icon name="trash-outline"></ion-icon>} colorScheme='red' variant='solid'>
+                                            Remove
+                                          </Button>
+                                        </Td>
+                                      </Tr>
+                                    )
+                                  })
+                                }
+                              </>
                             )
                           })
                         }
@@ -1771,7 +1642,7 @@ function App() {
                       <Tfoot className='bg-dark'>
                         <Tr>
                           <Th className='text-white'>School Name</Th>
-                          <Th className='text-white'>Student Name</Th>
+                          <Th className='text-white'>Members</Th>
                           <Th className='text-white text-center'>
                             Actions
                           </Th>
